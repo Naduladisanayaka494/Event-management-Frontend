@@ -1,34 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { fetchAnalytics } from "../services/api";
-import { Bar } from "react-chartjs-2";
+import AdminNavbar from "../pages/AdminDashboard";
+import DataEntryNavbar from "../pages/DataEntryNavbar";
 
 const Dashboard = () => {
-  const { auth } = useContext(AuthContext);
-  const [analytics, setAnalytics] = useState({
-    totalAttendees: 0,
-    capacityUtilization: 0,
-  });
+  const { role } = useContext(AuthContext); // Get role from context
 
-  useEffect(() => {
-    fetchAnalytics(1, auth.token).then((res) => setAnalytics(res.data));
-  }, );
-
-  const data = {
-    labels: ["Total Attendees", "Capacity Utilization"],
-    datasets: [
-      {
-        label: "Event Analytics",
-        data: [analytics.totalAttendees, analytics.capacityUtilization],
-        backgroundColor: ["#36A2EB", "#FF6384"],
-      },
-    ],
-  };
+  const userRole = role || localStorage.getItem("role");
 
   return (
-    <div className="container mt-5">
-      <h2>Dashboard</h2>
-      <Bar data={data} />
+    <div>
+      {userRole === "ADMIN" ? <AdminNavbar /> : <DataEntryNavbar />}
+      <div className="container mt-5">
+        <h1>Welcome to the Dashboard</h1>
+        <p>Role: {userRole}</p>
+      </div>
     </div>
   );
 };

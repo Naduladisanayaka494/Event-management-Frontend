@@ -6,10 +6,9 @@ const Header = () => {
   const [role, setRole] = useState("");
 
   useEffect(() => {
-
     const userRole = localStorage.getItem("role");
     const token = localStorage.getItem("token");
-    setRole(token ? userRole : ""); 
+    setRole(token ? userRole : "GUEST"); // Default role is set to "GUEST" if no token is found
   }, []);
 
   const handleLogout = () => {
@@ -68,6 +67,28 @@ const Header = () => {
                 <button className="btn btn-danger" onClick={handleLogout}>
                   Logout
                 </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    );
+  } else if (role === "GUEST") {
+    return (
+      <header className="bg-light text-dark py-3">
+        <div className="container d-flex justify-content-between align-items-center">
+          <h1 className="h3 mb-0">Employee - manegement system</h1>
+          <nav>
+            <ul className="nav">
+              <li className="nav-item">
+                <Link className="nav-link text-dark" to="/login">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link text-dark" to="/register">
+                  Register
+                </Link>
               </li>
             </ul>
           </nav>
