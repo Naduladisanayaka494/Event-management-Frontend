@@ -36,7 +36,7 @@ const LoginPage = () => {
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data || "Login failed");
-            // navigate("/dashboard");
+            navigate("/dashboard");
     }
   };
 
