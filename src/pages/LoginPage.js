@@ -8,7 +8,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setAuth } = useContext(AuthContext);
+  const { login } = useContext(AuthContext); // Use login from context
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,14 +34,10 @@ const LoginPage = () => {
       localStorage.setItem("role", userRole);
       localStorage.setItem("userId", userId);
 
-      setAuth({
-        token: jwt,
-        role: userRole,
-        userId: userId,
-      });
+      login(jwt, userRole, userId); // Use login instead of setAuth
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data || "Login failed");
+      console.log(err);
     }
   };
 
