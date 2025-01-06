@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import AdminNavbar from "../pages/AdminDashboard";
 import DataEntryNavbar from "../pages/DataEntryNavbar";
+import Footer from "../components/Footer";
 
 const Dashboard = () => {
   const { role } = useContext(AuthContext); // Get role from context
@@ -22,11 +23,9 @@ const Dashboard = () => {
   return (
     <div>
       {userRole === "ADMIN" ? <AdminNavbar /> : <DataEntryNavbar />}
-      <div className="container mt-5">
-        <h1>Welcome to the Dashboard</h1>
-        <p>Role: {userRole}</p>
-      </div>
+   
     </div>
+
   );
 };
 
