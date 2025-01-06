@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { FaHome, FaLink, FaSignOutAlt } from "react-icons/fa"; 
+import { FaHome, FaLink, FaSignOutAlt } from "react-icons/fa";
 
 function AdminNavbar() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    // Redirect if token is missing or role is not ADMIN
+    if (!token || role !== "ADMIN") {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -17,24 +27,24 @@ function AdminNavbar() {
   };
 
   return (
-    <Navbar expand="lg" className="bg-dark text-white shadow-lg">
+    <Navbar expand="lg" className="bg-white text-dark shadow-lg">
       <Container>
-        <Navbar.Brand href="#home" className="fw-bold text-primary">
+        <Navbar.Brand href="#home" className="fw-bold text-dark">
           Admin Panel
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home" className="text-white fw-semibold">
+            <Nav.Link href="#home" className="text-dark fw-semibold">
               <FaHome className="me-2" /> Home
             </Nav.Link>
-            <Nav.Link href="#link" className="text-white fw-semibold">
+            <Nav.Link href="#link" className="text-dark fw-semibold">
               <FaLink className="me-2" /> Link
             </Nav.Link>
             <NavDropdown
               title="Actions"
               id="basic-nav-dropdown"
-              className="text-white"
+              className="text-dark"
             >
               <NavDropdown.Item href="#action/3.1">Action 1</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -50,7 +60,7 @@ function AdminNavbar() {
           <Nav>
             <Nav.Link
               onClick={handleLogout}
-              className="btn btn-outline-light text-white d-flex align-items-center"
+              className="btn btn-outline-light text-dark d-flex align-items-center"
               style={{ cursor: "pointer" }}
             >
               <FaSignOutAlt className="me-2" />
