@@ -34,7 +34,7 @@ const LoginPage = () => {
       localStorage.setItem("role", userRole);
       localStorage.setItem("userId", userId);
 
-      login(jwt, userRole, userId); // Use login instead of setAuth
+      login(jwt, userRole, userId); 
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
