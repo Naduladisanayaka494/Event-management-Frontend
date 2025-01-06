@@ -1,11 +1,20 @@
-
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 function AdminNavbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userId");
+    navigate("/");
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -26,6 +35,11 @@ function AdminNavbar() {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
+          </Nav>
+          <Nav>
+            <Nav.Link onClick={handleLogout} style={{ cursor: "pointer" }}>
+              Logout
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

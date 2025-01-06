@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import eventImage from "../images/event2.jpg";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +10,13 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,26 +42,32 @@ const LoginPage = () => {
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data || "Login failed");
-      navigate("/dashboard");
     }
   };
 
   return (
-    <div className="d-flex vh-100">
+    <div className="d-flex flex-column flex-lg-row vh-100">
       <nav
-        className="bg-dark text-white p-3 d-flex flex-column"
-        style={{ width: "50%" }}
+        className="bg-dark text-white d-flex flex-column align-items-center justify-content-center p-4"
+        style={{ flex: "1" }}
       >
-        <h2 className="mb-4">Event-Manegement-System</h2>
+        <h2 className="mb-4 text-center">Event-Management-System</h2>
+        <img
+          src={eventImage}
+          alt="Event"
+          style={{ width: "80%", borderRadius: "20px" }}
+          className="mb-4"
+        />
+        <p className="text-center">Welcome to the Event Management System!</p>
       </nav>
       <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ width: "50%" }}
+        className="d-flex justify-content-center align-items-center bg-light"
+        style={{ flex: "1" }}
       >
         <div className="w-75">
-          <h2>Login</h2>
+          <h2 className="text-center mb-4">Login</h2>
           {error && <div className="alert alert-danger">{error}</div>}
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="shadow p-4 rounded bg-white">
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
