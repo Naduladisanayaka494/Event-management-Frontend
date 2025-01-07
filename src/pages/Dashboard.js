@@ -20,7 +20,12 @@ const Dashboard = () => {
     if (role === "ADMIN") {
       navigate("/Event-dashboard");
     }
+    else if (role === "DataEntry") {
+      navigate("/add-atendee");
+    }
   }, [auth.role, navigate]);
+
+  
 
   const userRole = auth.role || localStorage.getItem("role");
 
