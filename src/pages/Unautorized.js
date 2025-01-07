@@ -11,10 +11,7 @@ const Unauthorized = () => {
         You are not authorized to access this page. Please contact your
         administrator if you believe this is an error.
       </p>
-      <button
-        className="btn btn-primary"
-        onClick={() => navigate("/")}
-      >
+      <button className="btn btn-primary" onClick={() => navigate("/")}>
         Go Back to Login
       </button>
     </div>

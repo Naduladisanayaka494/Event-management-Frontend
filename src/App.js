@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import EventDashboard from "./pages/EventDashboard";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Unauthorized from "./pages/Unautorized";
 
 const App = () => {
   return (
@@ -23,12 +24,12 @@ const App = () => {
           <Route
             path="/Event-dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole="ADMIN">
                 <EventDashboard />
               </ProtectedRoute>
             }
           />
-          <Route path="/unauthorized" element={<EventDashboard />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
         <Footer />
       </div>
