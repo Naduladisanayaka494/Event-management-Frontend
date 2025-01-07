@@ -6,6 +6,11 @@ import EventDashboard from "./pages/EventDashboard";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Unauthorized from "./pages/Unautorized";
+import UserEvents from "./pages/UserEvents";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import RegisterAttendee from "./pages/RegisterAttendee";
+
 
 const App = () => {
   return (
@@ -26,6 +31,22 @@ const App = () => {
             element={
               <ProtectedRoute requiredRole="ADMIN">
                 <EventDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-atendee"
+            element={
+              <ProtectedRoute requiredRole="DataEntry">
+                <UserEvents />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/register-attendee/:eventId"
+            element={
+              <ProtectedRoute requiredRole="DataEntry">
+                <RegisterAttendee />
               </ProtectedRoute>
             }
           />
