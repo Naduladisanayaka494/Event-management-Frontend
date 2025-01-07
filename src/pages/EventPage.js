@@ -25,13 +25,12 @@ const EventManagement = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAssignModal, setShowAssignModal] = useState(false);
 
-  // Fetch events and users from API
+
   useEffect(() => {
     fetchEvents();
     fetchUsers();
   }, []);
 
-  // Fetch events
   const fetchEvents = () => {
     axios
       .get("http://localhost:8080/api/events")
@@ -43,7 +42,7 @@ const EventManagement = () => {
       });
   };
 
-  // Fetch users
+
   const fetchUsers = () => {
     axios
       .get("http://localhost:8080/api/auth/users")

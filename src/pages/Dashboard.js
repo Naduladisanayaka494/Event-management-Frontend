@@ -24,7 +24,6 @@ const Dashboard = () => {
 
   const userRole = auth.role || localStorage.getItem("role");
 
-  // Render the appropriate navbar for non-admin users
   return <div>{userRole === "ADMIN" ? null : <DataEntryNavbar />}</div>;
 };
 

@@ -42,24 +42,6 @@ function DataEntryNavbar() {
             <Nav.Link href="/add-atendee" className="text-dark fw-semibold">
               <FaHome className="me-2" /> ADD-ATTENDIES
             </Nav.Link>
-            {/* <Nav.Link href="#link" className="text-dark fw-semibold">
-              <FaLink className="me-2" /> Link
-            </Nav.Link> */}
-            {/* <NavDropdown
-              title="Actions"
-              id="basic-nav-dropdown"
-              className="text-dark"
-            >
-              <NavDropdown.Item href="#action/3.1">Action 1</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
           </Nav>
           <Nav>
             <Nav.Link
