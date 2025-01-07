@@ -10,6 +10,7 @@ import UserEvents from "./pages/UserEvents";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import RegisterAttendee from "./pages/RegisterAttendee";
+import EventPage from "./pages/EventPage";
 
 
 const App = () => {
@@ -50,9 +51,17 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/event-handling"
+            element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <EventPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
-
       </div>
     </Router>
   );

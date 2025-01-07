@@ -34,8 +34,11 @@ function AdminNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home" className="text-dark fw-semibold">
+            <Nav.Link href="/Event-dashboard" className="text-dark fw-semibold">
               <FaHome className="me-2" /> Event-Details
+            </Nav.Link>
+            <Nav.Link href="/event-handling" className="text-dark fw-semibold">
+              <FaLink className="me-2" /> Event-Handeling
             </Nav.Link>
             {/* <Nav.Link href="#link" className="text-dark fw-semibold">
               <FaLink className="me-2" /> Link
