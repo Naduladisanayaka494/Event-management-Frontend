@@ -7,6 +7,7 @@ import AdminNavbar from "./AdminDashboard";
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
+  const [users, setUsers] = useState([]);
   const [newEvent, setNewEvent] = useState({
     name: "",
     description: "",
@@ -20,13 +21,17 @@ const EventManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("add"); // 'add' or 'edit'
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAssignModal, setShowAssignModal] = useState(false);
 
-  // Fetch events from API
+  // Fetch events and users from API
   useEffect(() => {
     fetchEvents();
+    fetchUsers();
   }, []);
 
+  // Fetch events
   const fetchEvents = () => {
     axios
       .get("http://localhost:8080/api/events")
@@ -38,10 +43,22 @@ const EventManagement = () => {
       });
   };
 
-  // Handle modal close
+  // Fetch users
+  const fetchUsers = () => {
+    axios
+      .get("http://localhost:8080/api/auth/users")
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
+  };
+
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedEvent(null);
+    setSelectedUser(null);
     setNewEvent({
       name: "",
       description: "",
@@ -91,6 +108,19 @@ const EventManagement = () => {
     }
   };
 
+  // Handle assigning event to user
+  const handleAssignEventToUser = (eventId, userId) => {
+    axios
+      .post(`http://localhost:8080/api/events/${eventId}/users/${userId}`)
+      .then(() => {
+        alert("Event assigned to user successfully!");
+        setShowAssignModal(false); // Close the modal after assignment
+      })
+      .catch((error) => {
+        console.error("Error assigning event:", error);
+      });
+  };
+
   // Delete event
   const handleDeleteEvent = (id) => {
     axios
@@ -103,7 +133,6 @@ const EventManagement = () => {
       });
   };
 
-  // Filter events by search query
   const filteredEvents = events.filter(
     (event) =>
       event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -111,7 +140,6 @@ const EventManagement = () => {
       event.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Generate PDF report
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.text("Event Report", 20, 20);
@@ -185,12 +213,80 @@ const EventManagement = () => {
                 >
                   Delete
                 </Button>
+                <Button
+                  variant="success"
+                  onClick={() => {
+                    setSelectedEvent(event);
+                    setShowAssignModal(true);
+                  }}
+                  className="ms-2"
+                >
+                  Assign Event to User
+                </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-
+      <Modal show={showAssignModal} onHide={() => setShowAssignModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Assign Event to User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Select User</Form.Label>
+              {/* <Form.Control
+                as="select"
+                value={selectedUser ? selectedUser.id : ""}
+                onChange={(e) => {
+                  const user = users.find((u) => u.id === e.target.value);
+                  setSelectedUser(user);
+                }}
+              >
+                <option value="">Select User</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </Form.Control> */}
+              <Form.Control
+                as="select"
+                value={selectedUser ? selectedUser : ""} // This is correct for setting the selected value
+                onChange={(e) => {
+                  var userId = e.target.value;
+                  //   const user = users.find((u) => u.id === userId); // Find the user object based on the selected id
+                  setSelectedUser(userId);
+                  console.log(userId); // Set the selected user
+                }}
+              >
+                <option value="">Select User</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowAssignModal(false)}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() =>
+              selectedEvent && selectedUser
+                ? handleAssignEventToUser(selectedEvent.id, selectedUser)
+                : alert("Please select a user")
+            }
+          >
+            Assign
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -210,10 +306,12 @@ const EventManagement = () => {
                 placeholder="Enter event name"
               />
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
+                rows={3}
                 value={newEvent.description}
                 onChange={(e) =>
                   setNewEvent({ ...newEvent, description: e.target.value })
@@ -221,6 +319,7 @@ const EventManagement = () => {
                 placeholder="Enter event description"
               />
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Label>Date</Form.Label>
               <Form.Control
@@ -231,6 +330,7 @@ const EventManagement = () => {
                 }
               />
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Label>Location</Form.Label>
               <Form.Control
@@ -242,21 +342,19 @@ const EventManagement = () => {
                 placeholder="Enter event location"
               />
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Label>Capacity</Form.Label>
               <Form.Control
                 type="number"
                 value={newEvent.capacity}
                 onChange={(e) =>
-                  setNewEvent({
-                    ...newEvent,
-                    capacity: e.target.value,
-                    remainingCapacity: e.target.value,
-                  })
+                  setNewEvent({ ...newEvent, capacity: e.target.value })
                 }
                 placeholder="Enter event capacity"
               />
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Label>Tags</Form.Label>
               <Form.Control
@@ -275,7 +373,7 @@ const EventManagement = () => {
             Close
           </Button>
           <Button variant="primary" onClick={handleSaveEvent}>
-            {modalType === "add" ? "Add Event" : "Update Event"}
+            Save Event
           </Button>
         </Modal.Footer>
       </Modal>
