@@ -19,7 +19,7 @@ const EventManagement = () => {
     tags: "",
   });
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState("add"); // 'add' or 'edit'
+  const [modalType, setModalType] = useState("add"); 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -71,7 +71,6 @@ const EventManagement = () => {
     });
   };
 
-  // Handle modal open
   const handleShowModal = (type, event = null) => {
     setModalType(type);
     if (type === "edit" && event) {
@@ -83,7 +82,6 @@ const EventManagement = () => {
     setShowModal(true);
   };
 
-  // Save event (add or update)
   const handleSaveEvent = () => {
     if (modalType === "add") {
       axios
@@ -108,20 +106,20 @@ const EventManagement = () => {
     }
   };
 
-  // Handle assigning event to user
+
   const handleAssignEventToUser = (eventId, userId) => {
     axios
       .post(`http://localhost:8080/api/events/${eventId}/users/${userId}`)
       .then(() => {
         alert("Event assigned to user successfully!");
-        setShowAssignModal(false); // Close the modal after assignment
+        setShowAssignModal(false);
       })
       .catch((error) => {
         console.error("Error assigning event:", error);
       });
   };
 
-  // Delete event
+
   const handleDeleteEvent = (id) => {
     axios
       .delete(`http://localhost:8080/api/events/${id}`)
@@ -236,29 +234,13 @@ const EventManagement = () => {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Select User</Form.Label>
-              {/* <Form.Control
-                as="select"
-                value={selectedUser ? selectedUser.id : ""}
-                onChange={(e) => {
-                  const user = users.find((u) => u.id === e.target.value);
-                  setSelectedUser(user);
-                }}
-              >
-                <option value="">Select User</option>
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </Form.Control> */}
               <Form.Control
                 as="select"
-                value={selectedUser ? selectedUser : ""} // This is correct for setting the selected value
+                value={selectedUser ? selectedUser : ""} 
                 onChange={(e) => {
                   var userId = e.target.value;
-                  //   const user = users.find((u) => u.id === userId); // Find the user object based on the selected id
                   setSelectedUser(userId);
-                  console.log(userId); // Set the selected user
+                  console.log(userId); 
                 }}
               >
                 <option value="">Select User</option>
