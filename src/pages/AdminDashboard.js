@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { FaHome, FaLink,MdOutlineAssignment , FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaLink,MdOutlineAssignment , FaSignOutAlt,FaSignInAlt } from "react-icons/fa";
 
 function AdminNavbar() {
   const navigate = useNavigate();
@@ -39,6 +39,9 @@ function AdminNavbar() {
             </Nav.Link>
             <Nav.Link href="/event-handling" className="text-dark fw-semibold">
               <FaLink className="me-2" /> Event-Handeling
+            </Nav.Link>
+            <Nav.Link href="/signup" className="text-dark fw-semibold">
+              <FaSignInAlt className="me-2" /> Create-DataEnty-User
             </Nav.Link>
             {/* <Nav.Link href="#link" className="text-dark fw-semibold">
               <FaLink className="me-2" /> Link

@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import RegisterAttendee from "./pages/RegisterAttendee";
 import EventPage from "./pages/EventPage";
+import SignUp from "./pages/SignUp";
 
 
 const App = () => {
@@ -32,6 +33,14 @@ const App = () => {
             element={
               <ProtectedRoute requiredRole="ADMIN">
                 <EventDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <SignUp />
               </ProtectedRoute>
             }
           />
