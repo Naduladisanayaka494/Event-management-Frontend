@@ -52,7 +52,7 @@ const App = () => {
           />
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
-        <Footer />
+
       </div>
     </Router>
   );

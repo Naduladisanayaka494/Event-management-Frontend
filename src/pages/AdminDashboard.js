@@ -35,7 +35,7 @@ function AdminNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#home" className="text-dark fw-semibold">
-              <FaHome className="me-2" /> Assign-Event
+              <FaHome className="me-2" /> Event-Details
             </Nav.Link>
             {/* <Nav.Link href="#link" className="text-dark fw-semibold">
               <FaLink className="me-2" /> Link
