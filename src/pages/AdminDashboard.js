@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { FaHome, FaLink, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaLink,MdOutlineAssignment , FaSignOutAlt } from "react-icons/fa";
 
 function AdminNavbar() {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ function AdminNavbar() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    // Redirect if token is missing or role is not ADMIN
     if (!token || role !== "ADMIN") {
       navigate("/");
     }
@@ -36,12 +35,12 @@ function AdminNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#home" className="text-dark fw-semibold">
-              <FaHome className="me-2" /> Home
+              <FaHome className="me-2" /> Assign-Event
             </Nav.Link>
-            <Nav.Link href="#link" className="text-dark fw-semibold">
+            {/* <Nav.Link href="#link" className="text-dark fw-semibold">
               <FaLink className="me-2" /> Link
-            </Nav.Link>
-            <NavDropdown
+            </Nav.Link> */}
+            {/* <NavDropdown
               title="Actions"
               id="basic-nav-dropdown"
               className="text-dark"
@@ -55,7 +54,7 @@ function AdminNavbar() {
               <NavDropdown.Item href="#action/3.4">
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
           <Nav>
             <Nav.Link

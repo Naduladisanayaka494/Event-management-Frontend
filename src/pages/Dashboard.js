@@ -3,29 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import AdminNavbar from "../pages/AdminDashboard";
 import DataEntryNavbar from "../pages/DataEntryNavbar";
-import Footer from "../components/Footer";
 
 const Dashboard = () => {
-  const { role } = useContext(AuthContext); // Get role from context
+  const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const role = auth.role || localStorage.getItem("role"); 
 
-    // Redirect to login page if no token exists
     if (!token) {
       navigate("/");
+      return;
     }
-  }, [navigate]);
 
-  const userRole = role || localStorage.getItem("role");
+    if (role === "ADMIN") {
+      navigate("/Event-dashboard");
+    }
+  }, [auth.role, navigate]);
 
-  return (
-    <div>
-      {userRole === "ADMIN" ? <AdminNavbar /> : <DataEntryNavbar />}
-    
-    </div>
-  );
+  const userRole = auth.role || localStorage.getItem("role");
+
+  // Render the appropriate navbar for non-admin users
+  return <div>{userRole === "ADMIN" ? null : <DataEntryNavbar />}</div>;
 };
 
 export default Dashboard;

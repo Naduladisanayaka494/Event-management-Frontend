@@ -12,7 +12,6 @@ const App = () => {
       <div className="app-container">
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          {/* Wrap protected routes with the ProtectedRoute component */}
           <Route
             path="/dashboard"
             element={
@@ -29,6 +28,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/unauthorized" element={<EventDashboard />} />
         </Routes>
         <Footer />
       </div>
