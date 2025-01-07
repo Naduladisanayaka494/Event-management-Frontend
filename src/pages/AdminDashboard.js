@@ -29,7 +29,7 @@ function AdminNavbar() {
   return (
     <Navbar expand="lg" className="bg-white text-dark shadow-lg">
       <Container>
-        <Navbar.Brand href="#home" className="fw-bold text-dark">
+        <Navbar.Brand href="/Event-dashboard" className="fw-bold text-dark">
           Admin Panel
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

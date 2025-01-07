@@ -23,9 +23,8 @@ const Dashboard = () => {
   return (
     <div>
       {userRole === "ADMIN" ? <AdminNavbar /> : <DataEntryNavbar />}
-   
+    
     </div>
-
   );
 };
 
